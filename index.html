@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IDDP Application | Wen-Ching Fang</title>
+    <style>
+      :root {
+        --yellow: #f4d000;
+        --teal: #003641;
+        --cream: #f7f2e7;
+        --white: #ffffff;
+        --muted: rgba(247, 242, 231, 0.78);
+        --border: rgba(255, 255, 255, 0.14);
+        --panel: rgba(0, 54, 65, 0.72);
+        --panel-soft: rgba(255, 255, 255, 0.05);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        background: var(--teal);
+        color: var(--cream);
+        line-height: 1.6;
+      }
+
+      a,
+      button {
+        font: inherit;
+      }
+
+      .skip-link {
+        position: absolute;
+        left: -9999px;
+        top: auto;
+      }
+
+      .skip-link:focus {
+        left: 16px;
+        top: 16px;
+        z-index: 999;
+        background: white;
+        color: #111827;
+        padding: 10px 14px;
+        border-radius: 999px;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(14px);
+        background: rgba(0, 54, 65, 0.84);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .container {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 16px 0;
+      }
+
+      .brand {
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--yellow);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .nav-links a {
+        color: var(--cream);
+        opacity: 0.85;
+        text-decoration: none;
+        font-size: 0.95rem;
+      }
+
+      .nav-links a:hover,
+      .nav-links a:focus-visible {
+        opacity: 1;
+      }
+
+      .hero {
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .hero::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(90deg, rgba(0, 54, 65, 0.9) 0%, rgba(0, 54, 65, 0.72) 40%, rgba(0, 54, 65, 0.84) 100%),
+          url("/mnt/data/250828-plakat-a1-keyvisual_res_1204x516.jpeg");
+        background-size: cover;
+        background-position: center;
+      }
+
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at top left, rgba(244, 208, 0, 0.18), transparent 28%),
+          radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.12), transparent 24%);
+      }
+
+      .hero-grid {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.25fr 0.85fr;
+        gap: 40px;
+        padding: 88px 0;
+        align-items: start;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin-top: 0;
+      }
+
+      .hero h1 {
+        max-width: 840px;
+        font-size: clamp(2.7rem, 6vw, 5.25rem);
+        line-height: 1.05;
+        letter-spacing: -0.04em;
+        color: var(--white);
+        margin-bottom: 24px;
+      }
+
+      .hero-copy {
+        max-width: 650px;
+        font-size: 1.18rem;
+        color: rgba(255, 255, 255, 0.88);
+        margin-bottom: 32px;
+      }
+
+      .cta {
+        display: inline-block;
+        border: 0;
+        border-radius: 999px;
+        background: var(--yellow);
+        color: #16202a;
+        font-weight: 700;
+        text-decoration: none;
+        padding: 14px 24px;
+        box-shadow: 0 10px 30px rgba(244, 208, 0, 0.2);
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        padding: 28px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+      }
+
+      .eyebrow {
+        color: var(--yellow);
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+
+      .panel-intro {
+        color: rgba(255, 255, 255, 0.86);
+        margin-bottom: 22px;
+      }
+
+      .expect-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .expect-item {
+        display: grid;
+        grid-template-columns: 40px 1fr;
+        gap: 14px;
+        align-items: start;
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 20px;
+        background: rgba(15, 23, 42, 0.55);
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .expect-number {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(244, 208, 0, 0.16);
+        color: var(--yellow);
+        font-weight: 700;
+        font-size: 0.95rem;
+      }
+
+      .expect-item strong {
+        display: block;
+        color: var(--white);
+        font-size: 1.03rem;
+        margin-bottom: 4px;
+      }
+
+      .expect-item span:last-child {
+        color: rgba(255, 255, 255, 0.66);
+        font-size: 0.94rem;
+      }
+
+      main section {
+        scroll-margin-top: 88px;
+      }
+
+      .main-content {
+        padding: 72px 0 88px;
+      }
+
+      .intro-block {
+        max-width: 760px;
+        margin-bottom: 72px;
+      }
+
+      .section-label {
+        color: var(--yellow);
+        text-transform: uppercase;
+        letter-spacing: 0.24em;
+        font-size: 0.82rem;
+        font-weight: 600;
+        margin-bottom: 14px;
+      }
+
+      .section-title {
+        font-size: clamp(2rem, 4vw, 3rem);
+        line-height: 1.12;
+        letter-spacing: -0.03em;
+        color: var(--white);
+        margin-bottom: 22px;
+      }
+
+      .section-copy {
+        font-size: 1.08rem;
+        color: var(--muted);
+      }
+
+      .two-column {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 32px;
+        align-items: center;
+        margin-bottom: 72px;
+      }
+
+      .video-shell {
+        padding: 16px;
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        background: var(--panel-soft);
+      }
+
+      .video-frame {
+        position: relative;
+        padding-top: 56.25%;
+        overflow: hidden;
+        border-radius: 22px;
+        border: 1px solid var(--border);
+        background: rgba(15, 23, 42, 0.7);
+      }
+
+      .video-frame iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+
+      .bullet-list {
+        margin: 24px 0 0;
+        padding-left: 22px;
+        color: var(--muted);
+        font-size: 1.08rem;
+      }
+
+      .bullet-list li + li {
+        margin-top: 10px;
+      }
+
+      .feature-panel {
+        padding: 34px;
+        border-radius: 28px;
+        border: 1px solid var(--border);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05), rgba(244, 208, 0, 0.06));
+        margin-bottom: 72px;
+      }
+
+      .card-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+      }
+
+      .card {
+        border: 1px solid var(--border);
+        border-radius: 26px;
+        padding: 24px;
+        background: var(--panel-soft);
+      }
+
+      .card h3 {
+        color: var(--white);
+        font-size: 1.2rem;
+        margin-bottom: 14px;
+      }
+
+      .card p {
+        color: var(--muted);
+        margin-bottom: 0;
+      }
+
+      footer {
+        border-top: 1px solid var(--border);
+        padding: 28px 0 40px;
+      }
+
+      footer p {
+        max-width: 760px;
+        color: rgba(255, 255, 255, 0.62);
+        margin-bottom: 0;
+      }
+
+      @media (max-width: 900px) {
+        .hero-grid,
+        .two-column,
+        .card-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-grid {
+          padding: 64px 0;
+        }
+
+        .nav {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .container {
+          width: min(1120px, calc(100% - 24px));
+        }
+
+        .panel,
+        .feature-panel,
+        .card,
+        .video-shell {
+          padding: 20px;
+        }
+
+        .nav-links {
+          gap: 14px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="container nav">
+        <div class="brand">Wen-Ching Fang</div>
+        <nav class="nav-links" aria-label="Primary">
+          <a href="#intro">About me</a>
+          <a href="#digital">Digital</a>
+          <a href="#international">International</a>
+          <a href="#beyond">Beyond work</a>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1 id="hero-title">This is me beyond the CV</h1>
+          <p class="hero-copy">
+            A short digital introduction to who I am, how I think, and why I’m excited about the International Digital Development Program.
+          </p>
+          <a class="cta" href="#intro">Meet me in 60 seconds</a>
+        </div>
+
+        <aside class="panel" aria-labelledby="expect-title">
+          <div class="eyebrow">What to expect</div>
+          <p id="expect-title" class="panel-intro">
+            I know you review many applications, so I designed this website to be quick, clear, and personal. In the next few minutes, you’ll see:
+          </p>
+          <div class="expect-list">
+            <a class="expect-item" href="#intro">
+              <span class="expect-number">1</span>
+              <span>
+                <strong>Meet me in 60 seconds</strong>
+                <span>A quick introduction to who I am, what shaped me, and what drives me.</span>
+              </span>
+            </a>
+            <a class="expect-item" href="#digital">
+              <span class="expect-number">2</span>
+              <span>
+                <strong>Why digital transformation excites me</strong>
+                <span>How I think about digital change, customer value, and innovation in banking.</span>
+              </span>
+            </a>
+            <a class="expect-item" href="#international">
+              <span class="expect-number">3</span>
+              <span>
+                <strong>What living across cultures taught me</strong>
+                <span>How my experience across Taiwan, France, and Germany shaped my perspective.</span>
+              </span>
+            </a>
+            <a class="expect-item" href="#beyond">
+              <span class="expect-number">4</span>
+              <span>
+                <strong>What shapes me beyond work</strong>
+                <span>The experiences, values, and curiosity that shape who I am beyond my CV.</span>
+              </span>
+            </a>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <main id="main-content" class="main-content">
+      <div class="container">
+        <section class="intro-block" aria-labelledby="overview-title">
+          <div class="section-label">Introduction</div>
+          <h2 id="overview-title" class="section-title">A short, guided way to get to know me</h2>
+          <p class="section-copy">
+            Instead of a traditional cover letter, I created this website as a concise and more personal introduction. It is designed to help you quickly understand who I am, what motivates me, and why I would be excited to contribute to IDDP.
+          </p>
+        </section>
+
+        <section id="intro" class="two-column" aria-labelledby="intro-title">
+          <div class="video-shell">
+            <div class="video-frame">
+              <iframe
+                src="https://www.youtube.com/embed/DHBbuGBwAMw"
+                title="Meet me in 60 seconds"
+                loading="lazy"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen
+              ></iframe>
+            </div>
+          </div>
+          <div>
+            <div class="section-label">01</div>
+            <h2 id="intro-title" class="section-title">Meet me in 60 seconds</h2>
+            <ul class="bullet-list">
+              <li>Who I am in one minute</li>
+              <li>My international journey across Taiwan, France, and Germany</li>
+              <li>The mindset I bring to new environments and challenges</li>
+            </ul>
+          </div>
+        </section>
+
+        <section id="digital" class="feature-panel" aria-labelledby="digital-title">
+          <div class="section-label">02</div>
+          <h2 id="digital-title" class="section-title">Why digital transformation excites me</h2>
+          <p class="section-copy">
+            What excites me most is using digital tools and emerging technologies to create practical value. For me, digital transformation is not just about new technology. It is about understanding people, improving experiences, and helping traditional industries evolve in ways that are meaningful and useful.
+          </p>
+        </section>
+
+        <section id="international" aria-labelledby="international-title">
+          <div class="section-label">03</div>
+          <h2 id="international-title" class="section-title">What living across cultures taught me</h2>
+          <div class="card-grid">
+            <article class="card">
+              <h3>Cross-cultural adaptability</h3>
+              <p>
+                Studying and working across Taiwan, France, and Germany has taught me how to adapt quickly and connect with people from different backgrounds.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Global curiosity</h3>
+              <p>
+                I am energized by international environments because they challenge me to learn fast, stay open-minded, and grow through new perspectives.
+              </p>
+            </article>
+            <article class="card">
+              <h3>Mobility and openness</h3>
+              <p>
+                The international mobility of IDDP strongly appeals to me because I genuinely enjoy stepping into new teams, cities, and ways of working.
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section id="beyond" class="feature-panel" aria-labelledby="beyond-title" style="margin-top: 72px; margin-bottom: 0;">
+          <div class="section-label">04</div>
+          <h2 id="beyond-title" class="section-title">What shapes me beyond work</h2>
+          <p class="section-copy">
+            Beyond my academic and professional path, I value curiosity, communication, and growth. Whether through teaching, building something from scratch, or stepping into new environments, I enjoy learning by doing and connecting with people from different backgrounds.
+          </p>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="container">
+        <p>
+          Thank you for taking the time to explore my application. I hope this website gives you a clearer sense of who I am, how I think, and why I would be excited to contribute to IDDP.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        var hour = new Date().getHours();
+        var greeting = "Good evening";
+        if (hour < 12) greeting = "Good morning";
+        else if (hour < 18) greeting = "Good afternoon";
+
+        var title = document.getElementById("hero-title");
+        if (title) {
+          title.textContent = greeting + " Johann and Roshell, this is me beyond the CV";
+        }
+      })();
+    </script>
+  </body>
+</html>
