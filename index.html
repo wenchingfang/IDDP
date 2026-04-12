@@ -81,6 +81,7 @@
         font-size: 0.85rem;
         font-weight: 600;
         color: var(--yellow);
+        text-decoration: none;
       }
 
       .nav-links {
@@ -97,7 +98,9 @@
       }
 
       .nav-links a:hover,
-      .nav-links a:focus-visible {
+      .nav-links a:focus-visible,
+      .brand:hover,
+      .brand:focus-visible {
         opacity: 1;
       }
 
@@ -113,7 +116,7 @@
         inset: 0;
         background-image:
           linear-gradient(90deg, rgba(0, 54, 65, 0.9) 0%, rgba(0, 54, 65, 0.72) 40%, rgba(0, 54, 65, 0.84) 100%),
-          url("/mnt/data/250828-plakat-a1-keyvisual_res_1204x516.jpeg");
+          url("./commerzbank-tower.jpeg");
         background-size: cover;
         background-position: center;
       }
@@ -232,11 +235,6 @@
         margin-bottom: 4px;
       }
 
-      .expect-item span:last-child {
-        color: rgba(255, 255, 255, 0.66);
-        font-size: 0.94rem;
-      }
-
       main section {
         scroll-margin-top: 88px;
       }
@@ -323,16 +321,71 @@
         margin-bottom: 72px;
       }
 
+      .digital-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.75fr);
+        gap: 24px;
+        align-items: start;
+        margin-bottom: 72px;
+      }
+
+      .digital-main-card,
+      .digital-side-card {
+        border: 1px solid var(--border);
+        border-radius: 28px;
+        background: var(--panel-soft);
+      }
+
+      .digital-main-card {
+        padding: 30px;
+      }
+
+      .digital-side-card {
+        padding: 24px;
+      }
+
+      .digital-main-card h3,
+      .digital-side-card h3 {
+        margin-bottom: 18px;
+        color: var(--white);
+        font-size: 1.3rem;
+        line-height: 1.3;
+      }
+
+      .digital-main-card p,
+      .digital-side-card p {
+        color: var(--muted);
+        margin-bottom: 16px;
+      }
+
+      .digital-main-card p:last-child,
+      .digital-side-card p:last-child {
+        margin-bottom: 0;
+      }
+
+      .digital-side-column {
+        display: grid;
+        gap: 20px;
+        align-content: start;
+      }
+
+      .digital-photo {
+        width: 100%;
+        display: block;
+        border-radius: 24px;
+        object-fit: cover;
+      }
+
       .card-grid {
         display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
       }
 
       .card {
         border: 1px solid var(--border);
         border-radius: 26px;
-        padding: 24px;
+        padding: 28px;
         background: var(--panel-soft);
       }
 
@@ -361,7 +414,8 @@
       @media (max-width: 900px) {
         .hero-grid,
         .two-column,
-        .card-grid {
+        .card-grid,
+        .digital-layout {
           grid-template-columns: 1fr;
         }
 
@@ -383,12 +437,18 @@
         .panel,
         .feature-panel,
         .card,
-        .video-shell {
+        .video-shell,
+        .digital-main-card,
+        .digital-side-card {
           padding: 20px;
         }
 
         .nav-links {
           gap: 14px;
+        }
+
+        .hero-copy {
+          font-size: 1.6rem;
         }
       }
     </style>
@@ -399,13 +459,14 @@
     <header class="site-header">
       <div class="container nav">
         <a
-  class="brand"
-  href="https://www.linkedin.com/in/wen-ching-fang/"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  Wen-Ching Fang
-</a>
+          class="brand"
+          href="https://www.linkedin.com/in/wen-ching-fang/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Wen-Ching Fang
+        </a>
+
         <nav class="nav-links" aria-label="Primary">
           <a href="#intro">About me</a>
           <a href="#digital">Digital</a>
@@ -418,11 +479,8 @@
     <section class="hero">
       <div class="container hero-grid">
         <div>
-          <h1 id="hero-title">
-          </h1>
-          <p class="hero-copy">
-            This is me beyond the CV
-          </p>
+          <h1 id="hero-title"></h1>
+          <p class="hero-copy">This is me beyond the CV</p>
           <a class="cta" href="#overview">Meet me in 60 seconds</a>
         </div>
 
@@ -431,6 +489,7 @@
           <p id="expect-title" class="panel-intro">
             I know you review many applications, so I designed this website to be quick, clear, and personal. In the next few minutes, you’ll see:
           </p>
+
           <div class="expect-list">
             <a class="expect-item" href="#intro">
               <span class="expect-number">1</span>
@@ -438,18 +497,21 @@
                 <strong>Meet me in 60 seconds</strong>
               </span>
             </a>
+
             <a class="expect-item" href="#digital">
               <span class="expect-number">2</span>
               <span>
                 <strong>My digital mindset</strong>
               </span>
             </a>
+
             <a class="expect-item" href="#international">
               <span class="expect-number">3</span>
               <span>
                 <strong>My international journey</strong>
               </span>
             </a>
+
             <a class="expect-item" href="#beyond">
               <span class="expect-number">4</span>
               <span>
@@ -475,7 +537,7 @@
           <div class="video-shell">
             <div class="video-frame">
               <iframe
-                src="https://www.youtube.com/embed/DHBbuGBwAMw"
+                src="https://www.youtube-nocookie.com/embed/DHBbuGBwAMw"
                 title="Meet me in 60 seconds"
                 loading="lazy"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -484,6 +546,7 @@
               ></iframe>
             </div>
           </div>
+
           <div>
             <div class="section-label">01</div>
             <h2 id="intro-title" class="section-title">Meet me in 60 seconds</h2>
@@ -495,12 +558,13 @@
           </div>
         </section>
 
-<section id="digital" aria-labelledby="digital-title" style="margin-bottom: 72px;">
+        <section id="digital" aria-labelledby="digital-title">
           <div class="section-label">02</div>
           <h2 id="digital-title" class="section-title">How I think about digital change</h2>
+
           <div class="digital-layout">
             <article class="digital-main-card">
-              <h3>My own experience: pragmatism through entrepreneurship and B2B marketing</h3>
+              <h3>Pragmatism through entrepreneurship and B2B marketing</h3>
               <p>
                 Co-founding my own patisserie startup taught me early on that technology is only as good as the problems it solves. When the COVID-19 pandemic hit Taiwan shortly after our launch, we had to adapt overnight, pivoting from a physical storefront to an online delivery model. To handle the sudden surge in digital inquiries, I built and deployed an automated customer service chatbot on LINE.
               </p>
@@ -511,10 +575,10 @@
                 I took this pragmatic, customer-centric approach to my work at Crescendo Lab, where I helped build the digital infrastructure for a B2B tech product launch. By integrating Google Analytics to track user data and optimizing our omnichannel strategies, we successfully engaged over 400 brands and exceeded our launch goals by 25%. Whether I am solving a bottleneck for a single small business or tracking digital performance metrics for hundreds of B2B clients, I am driven to deliver digital solutions that create measurable, tangible value.
               </p>
             </article>
+
             <div class="digital-side-column">
-              <div class="digital-photo-card">
-                <div class="digital-photo-placeholder">Add image here</div>
-              </div>
+              <img class="digital-photo" src="./your-image.jpg" alt="Wen-Ching Fang" />
+
               <article class="digital-side-card">
                 <h3>Risk management: innovation with a safety lens</h3>
                 <p>
@@ -527,25 +591,28 @@
             </div>
           </div>
         </section>
-        
+
         <section id="international" aria-labelledby="international-title">
           <div class="section-label">03</div>
           <h2 id="international-title" class="section-title">What living across cultures taught me</h2>
+
           <div class="card-grid">
             <article class="card">
-              <h3>Rooted in Germany, Connected to the World</h3>
+              <h3>Rooted in Germany, connected to the world</h3>
               <p>
-              The German Mittelstand is built on "Hidden Champions"—niche market leaders who innovate locally but export globally. Supporting these companies requires a bank deeply anchored in Germany yet completely fluent in international markets. My own journey mirrors this. Having studied and worked across Taiwan, France, and Germany, I understand how to bridge European strategies with vital global markets, particularly in Asia. I am ready to strengthen Commerzbank's global network—whether that means leveraging data to streamline cross-border reporting, mitigating FX risks, or applying my research in blockchain protocols like XRPL and Algorand to help deploy smart contracts that automate and secure international trade finance.              </p>
+                The German Mittelstand is built on Hidden Champions: niche market leaders who innovate locally but export globally. Supporting these companies requires a bank deeply anchored in Germany yet completely fluent in international markets. My own journey mirrors this. Having studied and worked across Taiwan, France, and Germany, I understand how to bridge European strategies with vital global markets, particularly in Asia. I am ready to strengthen Commerzbank’s global network, whether that means leveraging data to streamline cross-border reporting, mitigating FX risks, or applying my research in blockchain protocols like XRPL and Algorand to help deploy smart contracts that automate and secure international trade finance.
+              </p>
             </article>
+
             <article class="card">
-              <h3>The International Angle: Why the IDDP?</h3>
+              <h3>The international angle: why the IDDP?</h3>
               <p>
-            This is exactly why the international structure of the IDDP excites me. The opportunity to contribute to Commerzbank’s global footprint through a rotation abroad perfectly aligns with my drive to work in dynamic, cross-border environments. Working in international teams, I have seen firsthand how diverse, intercultural perspectives lead to more robust and innovative solutions. I am eager to bring my background to the table and become an active, engaged contributor to the IDDP’s diverse, multilingual alumni network from day one.              </p>
-             </p>
+                This is exactly why the international structure of the IDDP excites me. The opportunity to contribute to Commerzbank’s global footprint through a rotation abroad perfectly aligns with my drive to work in dynamic, cross-border environments. Working in international teams, I have seen firsthand how diverse, intercultural perspectives lead to more robust and innovative solutions. I am eager to bring my background to the table and become an active, engaged contributor to the IDDP’s diverse, multilingual alumni network from day one.
+              </p>
             </article>
           </div>
         </section>
-        
+
         <section id="beyond" class="feature-panel" aria-labelledby="beyond-title" style="margin-top: 72px; margin-bottom: 0;">
           <div class="section-label">04</div>
           <h2 id="beyond-title" class="section-title">What shapes me beyond work</h2>
